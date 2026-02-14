@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/sanvalentin2026/'
   server: {
     host: true, // Permite acceder desde dispositivos móviles en la misma red
     port: 3000,
