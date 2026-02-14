@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💝</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Una experiencia mágica de San Valentín" />
+    <meta name="theme-color" content="#FF69B4" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Experiencia Mágica de San Valentín" />
+    <meta property="og:description" content="Una experiencia interactiva especial para ti" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Experiencia Mágica de San Valentín" />
+    
+    <!-- PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    
+    <title>Feliz San Valentín</title>
+    
+    <style>
+      /* Prevenir zoom en iOS */
+      body {
+        touch-action: pan-x pan-y;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+      }
+      
+      /* Loader inicial */
+      #initial-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #000000 0%, #1a0a1a 50%, #000000 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      #initial-loader.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .loader-heart {
+        font-size: 60px;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+          filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+        }
+        50% {
+          transform: scale(1.2);
+          filter: drop-shadow(0 0 30px rgba(255, 105, 180, 1));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loader inicial -->
+    <div id="initial-loader">
+      <div class="loader-heart">💝</div>
+    </div>
+    
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <script>
+      // Ocultar loader cuando la app cargue
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('initial-loader').classList.add('hidden');
+        }, 500);
+      });
+      
+      // Prevenir comportamiento por defecto de gestos touch
+      document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+      });
+      
+      // Deshabilitar zoom con doble tap en iOS
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function (e) {
+        const now = new Date().getTime();
+        if (now - lastTouchEnd <= 300) {
+          e.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+    </script>
+  </body>
+</html>
